@@ -54,6 +54,36 @@
   initial-value: #94e2d5;
 }
 
+@property --bg-crust {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #11111b;
+}
+
+@property --bg-mantle {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #181825;
+}
+
+@property --bg-base {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #1e1e2e;
+}
+
+@property --bg-accent {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #94e2d5;
+}
+
+@property --bg-accent-amount {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0.1;
+}
+
 :root {
   color-scheme: dark;
   transition:
@@ -65,7 +95,12 @@
     --overlay2 0.6s ease,
     --subtext0 0.6s ease,
     --text-color 0.6s ease,
-    --teal 0.6s ease;
+    --teal 0.6s ease,
+    --bg-crust 0.6s ease,
+    --bg-mantle 0.6s ease,
+    --bg-base 0.6s ease,
+    --bg-accent 0.6s ease,
+    --bg-accent-amount 0.6s ease;
 
   /* Catppuccin Mocha palette (dark) */
   --crust: #11111b;
@@ -91,6 +126,14 @@
   --card: var(--base);
   --card-border: var(--surface1);
   --icon-bg: var(--mantle);
+
+  /* Animated background (bg.js): darkest to lightest, plus the accent
+     mixed into the lightest spots and how strongly */
+  --bg-crust: #11111b;
+  --bg-mantle: #181825;
+  --bg-base: #1e1e2e;
+  --bg-accent: #94e2d5;
+  --bg-accent-amount: 0.1;
 }
 
 /* Catppuccin Latte palette (light) */
@@ -105,6 +148,14 @@
   --subtext0: #6c6f85;
   --text-color: #4c4f69;
   --teal: #179299;
+
+  /* Brighter than plain Latte: lavender-tinted swirls with teal in the
+     lightest spots, so light mode reads as Catppuccin, not white */
+  --bg-crust: #d0d6f7;
+  --bg-mantle: #e2e6f8;
+  --bg-base: #f7f8fc;
+  --bg-accent: #179299;
+  --bg-accent-amount: 0.3;
 }
 
 * {
@@ -179,8 +230,7 @@ nav {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 1.5rem;
-  padding: 1rem;
-  border-bottom: 1px solid var(--border);
+  padding: 1.1rem 1rem;
   background: transparent;
   justify-content: center;
 }
@@ -190,6 +240,7 @@ nav a {
   color: var(--nav-link);
   text-decoration: none;
   font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 1.3rem;
   font-weight: 500;
   transition: color 0.3s ease, transform 0.3s ease;
 }
@@ -211,8 +262,8 @@ nav a[aria-current="page"] {
   right: 1rem;
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 46px;
+  height: 46px;
   padding: 0;
   color: var(--nav-link);
   background: transparent;
@@ -232,8 +283,8 @@ nav a[aria-current="page"] {
 
 .theme-toggle svg {
   grid-area: 1 / 1;
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
@@ -357,6 +408,34 @@ figcaption {
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+/* On phones, line the links up from the left so they don't run into
+   the theme button. */
+@media (max-width: 600px) {
+  nav {
+    justify-content: flex-start;
+    gap: 0.5rem 1rem;
+    padding-right: 4.5rem;
+  }
+
+  nav a {
+    font-size: 1.15rem;
+  }
+}
+
+/* On phones, line the links up from the left so they don't run into
+   the theme button. */
+@media (max-width: 600px) {
+  nav {
+    justify-content: flex-start;
+    gap: 0.5rem 1rem;
+    padding-right: 4.5rem;
+  }
+
+  nav a {
+    font-size: 1.15rem;
+  }
 }
 
 @media (max-width: 800px) {
