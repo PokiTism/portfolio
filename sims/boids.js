@@ -4,6 +4,7 @@ const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
 const toggleButton = document.getElementById('toggle');
 const resetButton = document.getElementById('reset');
+const speedInput = document.getElementById('speed');
 
 const COUNT = 200;
 const VISUAL_RANGE = 50;
@@ -78,10 +79,11 @@ function step() {
     boid.vy = (boid.vy / speed) * clamped;
   }
 
+  const speed = Number(speedInput.value);
   for (const boid of boids) {
     // Wrap around the edges.
-    boid.x = (boid.x + boid.vx + canvas.width) % canvas.width;
-    boid.y = (boid.y + boid.vy + canvas.height) % canvas.height;
+    boid.x = (boid.x + boid.vx * speed + canvas.width) % canvas.width;
+    boid.y = (boid.y + boid.vy * speed + canvas.height) % canvas.height;
   }
 }
 
@@ -113,7 +115,10 @@ function frame() {
 
 toggleButton.addEventListener('click', () => {
   running = !running;
-  toggleButton.textContent = running ? 'Pauzė' : 'Pradėti';
+  const label = running ? 'Pauzė' : 'Pradėti';
+  toggleButton.classList.toggle('running', running);
+  toggleButton.title = label;
+  toggleButton.setAttribute('aria-label', label);
   if (running) requestAnimationFrame(frame);
 });
 

@@ -8,13 +8,16 @@
 </head>
 <body>
   <div class="controls">
-    <button id="toggle">Pradėti</button>
-    <button id="random">Atsitiktinai</button>
-    <button id="clear">Išvalyti</button>
-    <label>Greitis <input id="speed" type="range" min="1" max="60" value="15"></label>
+    <button id="toggle" class="icon" title="Pradėti" aria-label="Pradėti"><svg class="play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg></button>
+    <button id="reset" class="icon" title="Iš naujo" aria-label="Iš naujo"><svg class="stroke" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
+    <button id="random" class="icon" title="Atsitiktinai" aria-label="Atsitiktinai"><svg class="stroke" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg></button>
+    <button id="clear" class="icon" title="Išvalyti" aria-label="Išvalyti"><svg class="stroke" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button>
     <span id="generation" class="info">Karta: 0</span>
   </div>
-  <canvas id="board"></canvas>
+  <div class="stage">
+    <canvas id="board"></canvas>
+    <label class="speed">Greitis <input id="speed" type="range" min="1" max="60" value="15"></label>
+  </div>
   <script src="life.js"></script>
 </body>
 </html>

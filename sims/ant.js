@@ -80,7 +80,10 @@ function frame() {
 
 toggleButton.addEventListener('click', () => {
   running = !running;
-  toggleButton.textContent = running ? 'Pauzė' : 'Pradėti';
+  const label = running ? 'Pauzė' : 'Pradėti';
+  toggleButton.classList.toggle('running', running);
+  toggleButton.title = label;
+  toggleButton.setAttribute('aria-label', label);
   if (running) requestAnimationFrame(frame);
 });
 

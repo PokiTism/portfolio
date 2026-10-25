@@ -1,14 +1,33 @@
 // Conway's Game of Life: a live cell survives with 2 or 3 live neighbours,
 // a dead cell comes alive with exactly 3. Click or drag to draw cells.
+// It starts from a smiley face.
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
 const toggleButton = document.getElementById('toggle');
+const resetButton = document.getElementById('reset');
 const randomButton = document.getElementById('random');
 const clearButton = document.getElementById('clear');
 const speedInput = document.getElementById('speed');
 const generationLabel = document.getElementById('generation');
 
 const CELL = 6;
+const SMILEY_SCALE = 2;
+const SMILEY = [
+  '....XXXXXXX....',
+  '..XX.......XX..',
+  '.X...........X.',
+  '.X...........X.',
+  'X...XX...XX...X',
+  'X...XX...XX...X',
+  'X.............X',
+  'X.............X',
+  'X..X.......X..X',
+  'X...X.....X...X',
+  '.X...XXXXX...X.',
+  '.X...........X.',
+  '..XX.......XX..',
+  '....XXXXXXX....',
+];
 const DEAD_COLOR = '#000';
 const ALIVE_COLOR = '#fff';
 
@@ -32,6 +51,26 @@ function fill(chance) {
   for (let i = 0; i < grid.length; i++) {
     grid[i] = Math.random() < chance ? 1 : 0;
   }
+  generation = 0;
+  draw();
+}
+
+function smiley() {
+  grid = new Uint8Array(cols * rows);
+  const top = Math.floor((rows - SMILEY.length * SMILEY_SCALE) / 2);
+  const left = Math.floor((cols - SMILEY[0].length * SMILEY_SCALE) / 2);
+  SMILEY.forEach((line, y) => {
+    [...line].forEach((ch, x) => {
+      if (ch !== 'X') return;
+      for (let dy = 0; dy < SMILEY_SCALE; dy++) {
+        for (let dx = 0; dx < SMILEY_SCALE; dx++) {
+          const cy = top + y * SMILEY_SCALE + dy;
+          const cx = left + x * SMILEY_SCALE + dx;
+          if (cx >= 0 && cy >= 0 && cx < cols && cy < rows) grid[cy * cols + cx] = 1;
+        }
+      }
+    });
+  });
   generation = 0;
   draw();
 }
@@ -93,10 +132,14 @@ function drawCellAt(event) {
 
 toggleButton.addEventListener('click', () => {
   running = !running;
-  toggleButton.textContent = running ? 'Pauzė' : 'Pradėti';
+  const label = running ? 'Pauzė' : 'Pradėti';
+  toggleButton.classList.toggle('running', running);
+  toggleButton.title = label;
+  toggleButton.setAttribute('aria-label', label);
   if (running) requestAnimationFrame(frame);
 });
 
+resetButton.addEventListener('click', smiley);
 randomButton.addEventListener('click', () => fill(0.25));
 clearButton.addEventListener('click', () => fill(0));
 
@@ -113,8 +156,8 @@ window.addEventListener('pointerup', () => {
 
 window.addEventListener('resize', () => {
   resize();
-  fill(0.25);
+  smiley();
 });
 
 resize();
-fill(0.25);
+smiley();
