@@ -1,17 +1,43 @@
 :root {
-  /* Catppuccin Mocha */
-  --bg: #1e1e2e;      /* base */
-  --surface: #181825; /* mantle */
-  --text: #cdd6f4;    /* text */
-  --muted: #a6adc8;   /* subtext0 */
-  --accent: #cba6f7;  /* mauve */
-  --border: #313244;  /* surface0 */
-  --card: #313244;    /* surface0 */
-  --card-border: #45475a; /* surface1 */
+  /* Catppuccin Mocha palette */
+  --crust: #11111b;
+  --mantle: #181825;
+  --base: #1e1e2e;
+  --surface0: #313244;
+  --surface1: #45475a;
+  --overlay2: #9399b2;
+  --subtext0: #a6adc8;
+  --text-color: #cdd6f4;
+  --teal: #94e2d5;
+
+  /* What each color is used for */
+  --bg: var(--mantle);
+  --text: var(--text-color);
+  --muted: var(--subtext0);
+  --accent: var(--teal);
+  --heading: var(--teal);
+  --link: var(--teal);
+  --nav-link: var(--overlay2);
+  --nav-link-hover: var(--text-color);
+  --border: var(--surface0);
+  --card: var(--base);
+  --card-border: var(--surface1);
+  --icon-bg: var(--mantle);
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* Animated background from bg.js. The body background shows instead
+   when WebGL isn't available. */
+.bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  display: block;
 }
 
 body {
@@ -24,6 +50,7 @@ body {
 }
 
 h1, h2, h3 {
+  color: var(--heading);
   font-family: "Space Grotesk", system-ui, sans-serif;
   font-weight: 700;
   line-height: 1.2;
@@ -45,7 +72,7 @@ p {
 }
 
 a {
-  color: var(--accent);
+  color: var(--link);
 }
 
 ul {
@@ -60,7 +87,7 @@ li {
 code {
   font-family: ui-monospace, "SF Mono", Menlo, monospace;
   font-size: 0.95em;
-  background: var(--card-border);
+  background: var(--surface0);
   border-radius: 4px;
   padding: 0.1em 0.35em;
 }
@@ -71,18 +98,21 @@ nav {
   gap: 0.5rem 1.5rem;
   padding: 1rem;
   border-bottom: 1px solid var(--border);
-  background: var(--surface);
+  background: transparent;
   justify-content: center;
 }
 
 nav a {
-  color: var(--muted);
+  color: var(--nav-link);
   text-decoration: none;
   font-family: "Space Grotesk", system-ui, sans-serif;
   font-weight: 500;
 }
 
-nav a:hover,
+nav a:hover {
+  color: var(--nav-link-hover);
+}
+
 nav a[aria-current="page"] {
   color: var(--accent);
 }
@@ -110,6 +140,10 @@ img {
   width: 100%;
   height: 65vh;
   min-height: 320px;
+  /* Chromium can wrongly treat the opaque iframes as covering part of the
+     WebGL background and leave a hole in it. Being a hair transparent
+     stops them from counting as opaque. */
+  opacity: 0.999;
 }
 
 figure {
@@ -143,12 +177,10 @@ figcaption {
 
 .card h1 {
   text-align: center;
-  color: var(--accent);
 }
 
 .card h2 {
   font-size: 1.9rem;
-  color: var(--accent);
 }
 
 .socials {
@@ -164,7 +196,7 @@ figcaption {
   width: 64px;
   height: 64px;
   color: var(--text);
-  background: var(--bg);
+  background: var(--icon-bg);
   border: 1px solid var(--card-border);
   border-radius: 12px;
   transition: color 0.15s, border-color 0.15s, transform 0.15s;
