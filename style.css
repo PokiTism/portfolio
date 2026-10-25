@@ -6,6 +6,8 @@
   --muted: #a6adc8;   /* subtext0 */
   --accent: #cba6f7;  /* mauve */
   --border: #313244;  /* surface0 */
+  --card: #313244;    /* surface0 */
+  --card-border: #45475a; /* surface1 */
 }
 
 * {
@@ -58,7 +60,7 @@ li {
 code {
   font-family: ui-monospace, "SF Mono", Menlo, monospace;
   font-size: 0.95em;
-  background: var(--border);
+  background: var(--card-border);
   border-radius: 4px;
   padding: 0.1em 0.35em;
 }
@@ -86,7 +88,7 @@ nav a[aria-current="page"] {
 }
 
 main {
-  max-width: 44rem;
+  max-width: calc(900px + 2rem);
   margin: 0 auto;
   padding: 2.5rem 1rem 4rem;
 }
@@ -116,4 +118,36 @@ figcaption {
   color: var(--muted);
   font-size: 0.9rem;
   margin-top: 0.5rem;
+}
+
+.card {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 60px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+}
+
+.card + .card {
+  margin-top: 1.5rem;
+}
+
+.card > :first-child {
+  margin-top: 0;
+}
+
+.card > :last-child {
+  margin-bottom: 0;
+}
+
+.card h1 {
+  text-align: center;
+  color: var(--accent);
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 20px;
+  }
 }
