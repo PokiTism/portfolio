@@ -11,46 +11,46 @@
 </head>
 <body>
   <nav>
-    <a href="index.html">Pagrindinis</a>
+    <a href="index.html">Apie</a>
     <a href="projects.html" aria-current="page">Projektai</a>
     <a href="contact.html">Kontaktai</a>
   </nav>
   <main>
     <h1>Projektai</h1>
 
-    <h2>Langtono skruzdėlė</h2>
-    <p>Skruzdėlė vaikšto po langelių tinklelį ir laikosi tik dviejų taisyklių:</p>
+    <h2>Langtono skruzdėlė (Langton's Ant)</h2>
+    <p>Skruzdėlė laikosi tik dviejų taisyklių:</p>
     <ul>
       <li>Jei stovi ant balto langelio, pasisuka į dešinę, nudažo langelį juodai ir žengia į priekį.</li>
       <li>Jei stovi ant juodo langelio, pasisuka į kairę, nudažo langelį baltai ir žengia į priekį.</li>
     </ul>
-    <p>Maždaug 10 000 žingsnių viskas atrodo kaip visiškas chaosas. Tada skruzdėlė staiga pradeda statyti tvarkingą „greitkelį“, kuris kartojasi kas 104 žingsnius ir tęsiasi be galo.</p>
+    <p>Pirmus maždaug 10 000 žingsnių viskas atrodo kaip chaosas, bet tada skruzdėlė staiga pradeda statyti tvarkingą „greitkelį“, kuris tęsiasi be galo.</p>
     <iframe class="sim" src="sims/ant.html" title="Langtono skruzdėlės simuliacija" loading="lazy"></iframe>
 
-    <h2>Gyvybės žaidimas</h2>
-    <p>Tai žaidimas, kurio nežaidi: tik nupieši pradžią ir stebi. Kiekvienas langelis yra gyvas arba miręs, o kitoje kartoje jo likimas priklauso nuo aštuonių kaimynų:</p>
+    <h2>Gyvybės žaidimas (Conway's Game of Life)</h2>
+    <p>Kiekvienas langelis yra gyvas (baltas) arba miręs (juodas). Kitoje kartoje jo likimas priklauso nuo aštuonių artimiausių kaimynų:</p>
     <ul>
       <li>Gyvas langelis, turintis mažiau nei 2 gyvus kaimynus, miršta iš vienatvės.</li>
       <li>Gyvas langelis, turintis daugiau nei 3 gyvus kaimynus, miršta nuo perpildymo.</li>
       <li>Gyvas langelis su 2 arba 3 gyvais kaimynais išgyvena.</li>
       <li>Miręs langelis, turintis lygiai 3 gyvus kaimynus, atgyja.</li>
     </ul>
-    <p>Iš šių taisyklių atsiranda stabilios formos, mirksintys „švyturiai“ ir net „sklandytuvai“, kurie keliauja per ekraną. Spustelėk arba vedžiok pele, kad nupieštum savo langelius.</p>
+    <p>Spustelėk arba vedžiok pele, kad nupieštum savo langelius.</p>
     <iframe class="sim" src="sims/life.html" title="Conway gyvybės žaidimo simuliacija" loading="lazy"></iframe>
 
-    <h2>Boidai</h2>
+    <h2>Boidai (Boids)</h2>
     <p>Kiekvienas boidas mato tik savo artimiausius kaimynus ir laikosi trijų paprastų taisyklių:</p>
     <ul>
-      <li>Atstumas: nesigrūsti ir laikytis atokiau nuo per arti esančių kaimynų.</li>
+      <li>Atsiskyrimas: nesigrūsti ir atsitraukti nuo per arti esančių kaimynų.</li>
       <li>Krypties derinimas: skristi ta pačia kryptimi kaip kaimynai.</li>
-      <li>Sanglauda: laikytis arti kaimynų būrio centro.</li>
+      <li>Sanglauda: laikytis arčiau būrio centro.</li>
     </ul>
-    <p>Niekas jiems nevadovauja ir niekas nemato viso vaizdo, bet iš šių trijų taisyklių atsiranda sudėtingas elgesys: tikri pulkai, panašūs į paukščių ar žuvų būrius.</p>
+    <p>Niekas jiems nevadovauja ir niekas nemato viso vaizdo, bet iš šių trijų taisyklių atsiranda judėjimas, kuris atrodo lyg žuvų būrys vandenyje ar paukščių pulkas danguje.</p>
     <iframe class="sim" src="sims/boids.html" title="Boidų simuliacija" loading="lazy"></iframe>
 
-    <h2>Mandelbroto aibė</h2>
-    <p>Paimk tašką <code>c</code> ir vis kartok vieną formulę <code>z = z² + c</code>, pradėdamas nuo <code>z = 0</code>. Jei skaičius išlieka mažas, taškas priklauso aibei ir yra juodas. Jei jis pabėga į begalybę, taškas nuspalvinamas pagal tai, kaip greitai pabėgo.</p>
-    <p>Viena trumpa formulė, o aibės kraštas be galo sudėtingas: kiek beartintum, vis atsiranda naujų spiralių ir mažų pačios aibės kopijų. Spustelėk, kad priartintum.</p>
+    <h2>Mandelbroto aibė (Mandelbrot Set)</h2>
+    <p>Paimk tašką <code>c</code> ir vis kartok vieną formulę <code>z = z² + c</code>, pradedant nuo <code>z = 0</code>. Jei skaičius išlieka mažas, taškas priklauso aibei ir yra nudažytas juodai. Jei jis pabėga į begalybę, taškas nudažomas pagal tai, kaip greitai pabėgo.</p>
+    <p>Viena trumpa formulė, o aibės kraštas be galo sudėtingas: kad ir kiek beartintum, vis atsiranda naujų spiralių ir mažų pačios Mandelbroto aibės kopijų. Spustelėk, kad priartintum.</p>
     <iframe class="sim" src="sims/mandelbrot.html" title="Mandelbroto aibės naršyklė" loading="lazy"></iframe>
   </main>
 </body>
