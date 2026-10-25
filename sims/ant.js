@@ -10,9 +10,9 @@ const stepsLabel = document.getElementById('steps');
 const CELL = 4;
 const COLS = canvas.width / CELL;
 const ROWS = canvas.height / CELL;
-const EMPTY_COLOR = '#0f1115';
-const FILLED_COLOR = '#7bd88f';
-const ANT_COLOR = '#ff6b6b';
+const EMPTY_COLOR = '#1e1e2e';
+const FILLED_COLOR = '#cba6f7';
+const ANT_COLOR = '#fab387';
 
 // Up, right, down, left.
 const DIRECTIONS = [[0, -1], [1, 0], [0, 1], [-1, 0]];
