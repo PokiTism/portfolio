@@ -1,4 +1,4 @@
-// Langton's Ant: on an empty cell turn right, on a filled cell turn left,
+// Langton's Ant: on a white cell turn right, on a black cell turn left,
 // flip the cell, then step forward.
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -8,15 +8,15 @@ const speedInput = document.getElementById('speed');
 const stepsLabel = document.getElementById('steps');
 
 const CELL = 4;
-const COLS = canvas.width / CELL;
-const ROWS = canvas.height / CELL;
-const EMPTY_COLOR = '#1e1e2e';
-const FILLED_COLOR = '#cba6f7';
-const ANT_COLOR = '#fab387';
+const EMPTY_COLOR = '#fff';
+const FILLED_COLOR = '#000';
+const ANT_COLOR = '#e00';
 
 // Up, right, down, left.
 const DIRECTIONS = [[0, -1], [1, 0], [0, 1], [-1, 0]];
 
+let cols;
+let rows;
 let grid;
 let antX;
 let antY;
@@ -25,9 +25,13 @@ let steps;
 let running = false;
 
 function reset() {
-  grid = new Uint8Array(COLS * ROWS);
-  antX = Math.floor(COLS / 2);
-  antY = Math.floor(ROWS / 2);
+  canvas.width = canvas.clientWidth;
+  canvas.height = canvas.clientHeight;
+  cols = Math.floor(canvas.width / CELL);
+  rows = Math.floor(canvas.height / CELL);
+  grid = new Uint8Array(cols * rows);
+  antX = Math.floor(cols / 2);
+  antY = Math.floor(rows / 2);
   direction = 0;
   steps = 0;
   ctx.fillStyle = EMPTY_COLOR;
@@ -37,7 +41,7 @@ function reset() {
 }
 
 function step() {
-  const i = antY * COLS + antX;
+  const i = antY * cols + antX;
   if (grid[i] === 0) {
     direction = (direction + 1) % 4;
     grid[i] = 1;
@@ -49,8 +53,8 @@ function step() {
   ctx.fillRect(antX * CELL, antY * CELL, CELL, CELL);
 
   // Wrap around the edges.
-  antX = (antX + DIRECTIONS[direction][0] + COLS) % COLS;
-  antY = (antY + DIRECTIONS[direction][1] + ROWS) % ROWS;
+  antX = (antX + DIRECTIONS[direction][0] + cols) % cols;
+  antY = (antY + DIRECTIONS[direction][1] + rows) % rows;
   steps++;
 }
 
@@ -81,5 +85,6 @@ toggleButton.addEventListener('click', () => {
 });
 
 resetButton.addEventListener('click', reset);
+window.addEventListener('resize', reset);
 
 reset();
