@@ -395,6 +395,62 @@ figcaption {
   width: 100%;
 }
 
+/* Kontaktai: icons in the middle, the cat pinned up off to the side */
+.contact-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 2rem;
+  align-items: center;
+}
+
+.contact-layout .socials {
+  margin-top: 0;
+}
+
+.pet {
+  margin: 0;
+  padding: 10px 10px 12px;
+  background: var(--surface0);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transform: rotate(3deg);
+  transition: transform 0.3s ease;
+}
+
+.pet:hover {
+  transform: rotate(0deg) scale(1.03);
+}
+
+.pet img {
+  width: 100%;
+  border: 0;
+  border-radius: 3px;
+}
+
+.pet figcaption {
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.pet-blame {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .contact-layout {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }
+
+  .pet {
+    max-width: 240px;
+  }
+}
+
 @media (max-width: 1000px) {
   .project-intro {
     grid-template-columns: minmax(0, 1fr);
@@ -485,7 +541,8 @@ figcaption {
   nav a,
   .theme-toggle,
   .theme-toggle svg,
-  .socials a {
+  .socials a,
+  .pet {
     transition: none;
   }
 }
