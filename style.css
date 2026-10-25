@@ -46,6 +46,23 @@ a {
   color: var(--accent);
 }
 
+ul {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+}
+
+li {
+  margin-bottom: 0.4rem;
+}
+
+code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.95em;
+  background: var(--border);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
 nav {
   display: flex;
   flex-wrap: wrap;
