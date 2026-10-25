@@ -8,12 +8,14 @@
 </head>
 <body>
   <div class="controls">
-    <button id="toggle">Pradėti</button>
-    <button id="reset">Iš naujo</button>
-    <label>Greitis <input id="speed" type="range" min="1" max="500" value="100"></label>
+    <button id="toggle" class="icon" title="Pradėti" aria-label="Pradėti"><svg class="play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg></button>
+    <button id="reset" class="icon" title="Iš naujo" aria-label="Iš naujo"><svg class="stroke" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
     <span id="steps" class="info">Žingsniai: 0</span>
   </div>
-  <canvas id="board"></canvas>
+  <div class="stage">
+    <canvas id="board"></canvas>
+    <label class="speed">Greitis <input id="speed" type="range" min="1" max="500" value="100"></label>
+  </div>
   <script src="ant.js"></script>
 </body>
 </html>
