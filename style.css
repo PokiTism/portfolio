@@ -1,5 +1,73 @@
+/* Registering the palette colors lets the browser animate them, so the
+   whole site fades smoothly when the theme changes. */
+@property --crust {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #11111b;
+}
+
+@property --mantle {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #181825;
+}
+
+@property --base {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #1e1e2e;
+}
+
+@property --surface0 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #313244;
+}
+
+@property --surface1 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #45475a;
+}
+
+@property --overlay2 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #9399b2;
+}
+
+@property --subtext0 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #a6adc8;
+}
+
+@property --text-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #cdd6f4;
+}
+
+@property --teal {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #94e2d5;
+}
+
 :root {
-  /* Catppuccin Mocha palette */
+  color-scheme: dark;
+  transition:
+    --crust 0.6s ease,
+    --mantle 0.6s ease,
+    --base 0.6s ease,
+    --surface0 0.6s ease,
+    --surface1 0.6s ease,
+    --overlay2 0.6s ease,
+    --subtext0 0.6s ease,
+    --text-color 0.6s ease,
+    --teal 0.6s ease;
+
+  /* Catppuccin Mocha palette (dark) */
   --crust: #11111b;
   --mantle: #181825;
   --base: #1e1e2e;
@@ -23,6 +91,20 @@
   --card: var(--base);
   --card-border: var(--surface1);
   --icon-bg: var(--mantle);
+}
+
+/* Catppuccin Latte palette (light) */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --crust: #dce0e8;
+  --mantle: #e6e9ef;
+  --base: #eff1f5;
+  --surface0: #ccd0da;
+  --surface1: #bcc0cc;
+  --overlay2: #7c7f93;
+  --subtext0: #6c6f85;
+  --text-color: #4c4f69;
+  --teal: #179299;
 }
 
 * {
@@ -93,6 +175,7 @@ code {
 }
 
 nav {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 1.5rem;
@@ -103,18 +186,71 @@ nav {
 }
 
 nav a {
+  display: inline-block;
   color: var(--nav-link);
   text-decoration: none;
   font-family: "Space Grotesk", system-ui, sans-serif;
   font-weight: 500;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 nav a:hover {
   color: var(--nav-link-hover);
+  transform: scale(1.15);
 }
 
 nav a[aria-current="page"] {
   color: var(--accent);
+}
+
+/* Sun/moon button added by theme.js. Shows the sun in dark mode and the
+   moon in light mode, i.e. the theme a click switches to. */
+.theme-toggle {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  color: var(--nav-link);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-50%) scale(1.12);
+}
+
+.theme-toggle svg {
+  grid-area: 1 / 1;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.theme-toggle .moon,
+:root[data-theme="light"] .theme-toggle .sun {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+
+:root[data-theme="light"] .theme-toggle .moon {
+  opacity: 1;
+  transform: none;
 }
 
 /* Leave about 20% of the window empty on each side. */
@@ -231,5 +367,15 @@ figcaption {
 
   .card {
     padding: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root,
+  nav a,
+  .theme-toggle,
+  .theme-toggle svg,
+  .socials a {
+    transition: none;
   }
 }
