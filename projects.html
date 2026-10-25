@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&display=swap">
   <link rel="stylesheet" href="style.css">
+  <script src="theme.js"></script>
   <script src="bg.js" defer></script>
 </head>
 <body>
@@ -18,16 +19,6 @@
   </nav>
   <main>
     <h1>Projektai</h1>
-
-    <section class="card">
-      <h2>Langtono skruzdėlė (Langton's Ant)</h2>
-      <p>Skruzdėlė laikosi tik dviejų taisyklių:</p>
-      <ul>
-        <li>Jei stovi ant balto langelio, pasisuka į dešinę, nudažo langelį juodai ir žengia į priekį.</li>
-        <li>Jei stovi ant juodo langelio, pasisuka į kairę, nudažo langelį baltai ir žengia į priekį.</li>
-      </ul>
-      <iframe class="sim" src="sims/ant.html" title="Langtono skruzdėlės simuliacija" loading="lazy"></iframe>
-    </section>
 
     <section class="card">
       <h2>Gyvybės žaidimas (Conway's Game of Life)</h2>
@@ -43,6 +34,13 @@
     </section>
 
     <section class="card">
+      <h2>Mandelbroto aibė (Mandelbrot Set)</h2>
+      <p>Paimk tašką <code>c</code> ir vis kartok vieną formulę <code>z = z² + c</code>, pradedant nuo <code>z = 0</code>. Jei skaičius išlieka mažas, taškas priklauso aibei ir yra nudažytas juodai. Jei jis pabėga į begalybę, taškas nudažomas pagal tai, kaip greitai pabėgo.</p>
+      <p>Viena trumpa formulė, o aibės kraštas be galo sudėtingas: kad ir kiek beartintum, vis atsiranda naujų spiralių ir mažų pačios Mandelbroto aibės kopijų. Spustelėk, kad priartintum.</p>
+      <iframe class="sim" src="sims/mandelbrot.html" title="Mandelbroto aibės naršyklė" loading="lazy"></iframe>
+    </section>
+
+    <section class="card">
       <h2>Boidai (Boids)</h2>
       <p>Kiekvienas boidas mato tik savo artimiausius kaimynus ir laikosi trijų paprastų taisyklių:</p>
       <ul>
@@ -55,10 +53,13 @@
     </section>
 
     <section class="card">
-      <h2>Mandelbroto aibė (Mandelbrot Set)</h2>
-      <p>Paimk tašką <code>c</code> ir vis kartok vieną formulę <code>z = z² + c</code>, pradedant nuo <code>z = 0</code>. Jei skaičius išlieka mažas, taškas priklauso aibei ir yra nudažytas juodai. Jei jis pabėga į begalybę, taškas nudažomas pagal tai, kaip greitai pabėgo.</p>
-      <p>Viena trumpa formulė, o aibės kraštas be galo sudėtingas: kad ir kiek beartintum, vis atsiranda naujų spiralių ir mažų pačios Mandelbroto aibės kopijų. Spustelėk, kad priartintum.</p>
-      <iframe class="sim" src="sims/mandelbrot.html" title="Mandelbroto aibės naršyklė" loading="lazy"></iframe>
+      <h2>Langtono skruzdėlė (Langton's Ant)</h2>
+      <p>Skruzdėlė laikosi tik dviejų taisyklių:</p>
+      <ul>
+        <li>Jei stovi ant balto langelio, pasisuka į dešinę, nudažo langelį juodai ir žengia į priekį.</li>
+        <li>Jei stovi ant juodo langelio, pasisuka į kairę, nudažo langelį baltai ir žengia į priekį.</li>
+      </ul>
+      <iframe class="sim" src="sims/ant.html" title="Langtono skruzdėlės simuliacija" loading="lazy"></iframe>
     </section>
   </main>
 </body>

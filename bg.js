@@ -1,12 +1,18 @@
-// Animated background: a slow, domain-warped noise field in dark Catppuccin
-// Mocha tones, drawn with WebGL behind the whole page. Falls back to the
-// plain body background when WebGL is missing, and to a still frame when
-// the visitor prefers reduced motion.
+// Animated background: a slow, domain-warped noise field in the site's
+// crust/mantle/base colors, drawn with WebGL behind the whole page. The
+// colors are read from the CSS variables, so the background follows the
+// light/dark theme fade. Falls back to the plain body background when WebGL
+// is missing, and to a still frame when the visitor prefers reduced motion.
 (() => {
   // Render at half resolution; CSS scales the canvas up to fill the window.
   const SCALE = 0.5;
   // Seconds of shader time to show when motion is reduced.
   const STILL_TIME = 240;
+  // How long to keep redrawing a still background after a theme change,
+  // a bit longer than the CSS color transition.
+  const THEME_FADE_MS = 800;
+  // CSS variables the shader takes its colors from.
+  const COLOR_NAMES = ['crust', 'mantle', 'base', 'teal'];
 
   const VERTEX_SHADER = `
     attribute vec2 a_position;
@@ -25,10 +31,10 @@
     uniform vec2 u_resolution;
     uniform float u_time;
 
-    const vec3 CRUST = vec3(17.0, 17.0, 27.0) / 255.0;
-    const vec3 MANTLE = vec3(24.0, 24.0, 37.0) / 255.0;
-    const vec3 BASE = vec3(30.0, 30.0, 46.0) / 255.0;
-    const vec3 TEAL = vec3(148.0, 226.0, 213.0) / 255.0;
+    uniform vec3 u_crust;
+    uniform vec3 u_mantle;
+    uniform vec3 u_base;
+    uniform vec3 u_teal;
     // Strongest teal mix, reached only in the lightest spots.
     const float TEAL_AMOUNT = 0.1;
 
@@ -89,9 +95,9 @@
       float x = shade * bands;
       shade = mix(shade, (floor(x) + smoothstep(0.3, 0.7, fract(x))) / bands, 0.6);
 
-      vec3 color = mix(CRUST, MANTLE, smoothstep(0.0, 0.45, shade));
-      color = mix(color, BASE, smoothstep(0.4, 0.85, shade));
-      color = mix(color, TEAL, TEAL_AMOUNT * smoothstep(0.8, 1.0, shade) * smoothstep(0.3, 0.8, r.x));
+      vec3 color = mix(u_crust, u_mantle, smoothstep(0.0, 0.45, shade));
+      color = mix(color, u_base, smoothstep(0.4, 0.85, shade));
+      color = mix(color, u_teal, TEAL_AMOUNT * smoothstep(0.8, 1.0, shade) * smoothstep(0.3, 0.8, r.x));
 
       // A little dither so the dark gradients don't show 8-bit steps.
       color += (hash(gl_FragCoord.xy + fract(u_time)) - 0.5) / 255.0;
@@ -134,6 +140,7 @@
 
   const resolutionUniform = gl.getUniformLocation(program, 'u_resolution');
   const timeUniform = gl.getUniformLocation(program, 'u_time');
+  const colorUniforms = COLOR_NAMES.map((name) => gl.getUniformLocation(program, 'u_' + name));
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let animating = false;
@@ -144,7 +151,27 @@
     return (Date.now() / 1000) % 3600;
   }
 
+  // Accepts "#rrggbb" or "rgb(r, g, b)", the forms the CSS variables come in.
+  function parseColor(value) {
+    value = value.trim();
+    if (value.startsWith('#')) {
+      const n = parseInt(value.slice(1), 16);
+      return [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => v / 255);
+    }
+    const parts = value.match(/[\d.]+/g) || [0, 0, 0];
+    return parts.slice(0, 3).map((v) => Number(v) / 255);
+  }
+
+  // Read every frame so the background follows the theme transition.
+  function updateColors() {
+    const style = getComputedStyle(document.documentElement);
+    COLOR_NAMES.forEach((name, i) => {
+      gl.uniform3fv(colorUniforms[i], parseColor(style.getPropertyValue('--' + name)));
+    });
+  }
+
   function draw(time) {
+    updateColors();
     gl.uniform1f(timeUniform, time);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
@@ -178,4 +205,15 @@
   start();
   window.addEventListener('resize', resize);
   reducedMotion.addEventListener('change', start);
+
+  // A still background doesn't redraw on its own, so follow the theme fade.
+  window.addEventListener('themechange', () => {
+    if (animating) return;
+    const until = performance.now() + THEME_FADE_MS;
+    function fade() {
+      draw(STILL_TIME);
+      if (performance.now() < until) requestAnimationFrame(fade);
+    }
+    requestAnimationFrame(fade);
+  });
 })();
