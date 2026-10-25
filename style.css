@@ -370,6 +370,37 @@ figcaption {
   font-size: 1.9rem;
 }
 
+/* Project text with an animation beside it */
+.project-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 36%);
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.project-text > :first-child {
+  margin-top: 0;
+}
+
+.project-text > :last-child {
+  margin-bottom: 0;
+}
+
+.project-media {
+  margin: 0;
+}
+
+.project-media img {
+  width: 100%;
+}
+
+@media (max-width: 1000px) {
+  .project-intro {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .socials {
   display: flex;
   justify-content: center;
